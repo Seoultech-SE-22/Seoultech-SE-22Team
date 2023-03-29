@@ -1,5 +1,7 @@
 import random
-import uno_ChkCon # Check Condition 
+from uno_Const import * # const
+import uno_ChkCon # Check Condition
+
 from queue import Queue
 
 class game: # game 클래스 생성
@@ -9,11 +11,15 @@ class game: # game 클래스 생성
     turnPlayer = 0 # 현재 턴 플레이어
     attackCard = 0 # 공격 카드 매수
     jumpNumber = 1 # 턴 종료시, 플레이어를 넘기는 정도
+    state = NORM
+    botCompeteList = []
 
     def __init__(self, player_list): # game 클래스 생성자
         self.playerList = player_list
         self.deckList = pile()
         self.openCard = pile()
+        state = NORM
+        botCompeteList = []
 
     def __del__(self): # game class 소멸자
         pass
@@ -25,7 +31,7 @@ class game: # game 클래스 생성
         self.deckList.shuffle()
         
         for i in range(0, len(self.playerList)): # 각 플레이어들에게 카드를 나눠줍니다.
-            self.playerList[i].draw(self.deckList, 5) # 나눠줄 카드의 개수 : 임의로 5로 설정했음
+            self.playerList[i].draw(self, 5) # 나눠줄 카드의 개수 : 임의로 5로 설정했음
             print(self.playerList[i].playerName + ": ", self.playerList[i].allHand(),"\n")
             
         self.placeOpenCardZone(self.deckList.takeTopCard()) # 덱 맨 위에서 카드를 1장 오픈합니다.
@@ -61,7 +67,7 @@ class game: # game 클래스 생성
     
     def mainPhase(self):
         if self.attackCard > 0: # 공격 처리
-            self.playerList[self.turnPlayer].draw(self.deckList, self.attackCard)
+            self.playerList[self.turnPlayer].draw(self, self.attackCard)
             self.attackCard = 0 # attactCard 리셋
         
         cond = True
@@ -81,7 +87,7 @@ class game: # game 클래스 생성
                     print("그 카드는 낼 수 없습니다.")
             if input_act == 'd':
                 print("카드를 1장 뽑습니다.")
-                self.playerList[self.turnPlayer].draw(self.deckList, 1)
+                self.playerList[self.turnPlayer].draw(self, 1)
                 cond = False
             else:
                 pass
@@ -90,13 +96,52 @@ class game: # game 클래스 생성
         
         print()
     
-    def endPhase(self):
+    def actList(self): # 현재 활성화야햐하는 버튼의 딕셔너리를 반환
+        result = {'drawBtn': True,'unoBtn': True} # 'drawBtn': 드로우 버튼, 'unoBtn': 우노 버튼
+        if (self.playerList[self.turnPlayer].isUser == False):
+            result['drawBtn'] = False
+            
+        if (self.state == NORM):
+            result['unoBtn'] = False
+            
+        return result
+    
+    def eventCardBtn(self, idx): # 카드 클릭시 이벤트
+        if self.playerList[self.turnPlayer].isUser == True:
+            if self.playerList[self.turnPlayer].handCardList[idx].canUse(self) == True:
+                useCard = self.playerList[self.turnPlayer].delCard(idx)
+                self.placeOpenCardZone(useCard)
+            else:
+                print("그 카드는 낼 수 없어요")
+        else:
+            print("아직 당신의 턴이 아니에요")
+        
+        if len(self.playerList[self.turnPlayer].handCardList) == 1:
+            pass # 봇간 우노 경쟁 메서드
+        
+        self.endPhase()
+    
+    def eventDrawBtn(self): # 드로우 버튼 클릭시 이벤트
+        self.playerList[self.turnPlayer].draw(self, 1)
+        self.endPhase()
+    
+    def eventUnoBtn(self): # 우노 버튼 클릭시 이벤트
+        self.state == NORM
+        if self.playerList[self.turnPlayer-1].isUser == True: # 나의 우노가
+            pass # 저지당하지 않았다.
+        else: # 다른 사람의 우노를
+            self.playerList[self.turnPlayer-1].draw(self, 1) # 저지했다.
+      
+    
+    def endPhase(self): # endPhase를 실행
         
         if (len(self.playerList[self.turnPlayer].handCardList) == 0):
             return True
         
         self.turnPlayer = (self.turnPlayer+self.jumpNumber)%len(self.playerList) # 점프 처리
         self.jumpNumber = 1 # jumpNumber 리셋
+        
+        # time 오브젝트의 시간을 초기화
         
         return False
     
@@ -110,14 +155,48 @@ class game: # game 클래스 생성
             self.placeOpenCardZone(useCard)
             print( useCard.info() + "를 냅니다.")
         else:             # 낼 수 있는 카드가 없다면
-            self.playerList[self.turnPlayer].draw(self.deckList, 1) # 카드를 뽑고
+            self.playerList[self.turnPlayer].draw(self, 1) # 카드를 뽑고
             print("낼 카드가 없어서 1장 뽑습니다.")
         
         print(self.playerList[self.turnPlayer].playerName + ": ", self.playerList[self.turnPlayer].allHand())
         print()
         print()
+        self.endPhase()
         
-
+    def processUno(self, idx): # 누군가 우노를 외쳤을 때, 게임에서 실질적으로 바뀌는 부분에 대한 처리
+        if self.state == UNO:
+            self.state = NORM
+            
+            if self.turnPlayer-1 == idx: # (턴 플레이어 -1) = 전 턴의 플레이어 = 우노 상태를 만든 당사자
+                print(self.playerList[idx].playerName,'가 UNO 우노를 외쳤습니다.')
+            else: # 그 외의 플레이어
+                print(self.playerList[idx].playerName,'가', self.playerList[self.turnPlayer-1].playerName,' 의 UNO 우노를 저지했습니다.')
+                self.playerList[self.turnPlayer-1].draw(self, 1)
+        else:
+            print('state == UNO에서만 이 메서드가 동작합니다.')
+    
+    def searchUserIdx(self): # 하나의 user만 있을 때 동작합니다.
+        result = -1
+        for i in range(0, len(self.playerList)):
+            if self.playerList[i].isUser == True:
+                result = i
+                break
+        
+        return result
+        
+    
+    def userHand(self): # 유저의 패 리스트를 반환합니다.
+        result = self.playerList[self.searchUserIdx()].handCardList
+        
+        return result
+    
+    def playerTurnTable(self): # 플레이어의 턴 순서를 표시하기 위한 정보를 반환합니다.
+        result = []
+        for i in range(0, len(self.playerList)):
+            idx = (i+self.turnPlayer)%len(self.playerList)
+            result.append(self.playerList[idx])
+        return result
+ 
 class pile: # pile 클래스 생성
     cardList = []
 
@@ -157,9 +236,16 @@ class player: # player 클래스 생성
     def __del__(self): # player class 소멸자
         pass
 
-    def draw(self, pile, num): # game의 DeckList에서 카드를 뽑아 패로 가져옵니다.
-        for i in range(0, num):
-            self.handCardList.append(pile.takeTopCard())
+    def draw(self, game, num): # game의 DeckList에서 카드를 뽑아 패로 가져옵니다.
+        
+        if len(game.deckList.cardList) < num: # 뽑을 카드 부족하면
+            top = game.openCard.takeTopCard() # 맨 위 카드 하나 빼놓고
+            game.deckList + game.openCard.cardList # 나머지는 합쳐서
+            game.deckList.shuffle() # 셔플
+            game.openCard + [top] # 빼둔 카드 openCard에 둠
+        
+        for i in range(0, num): # num 만큼 반복
+            self.handCardList.append(game.deckList.takeTopCard())
 
     def allHand(self): # hand의 모든 카드에 대한 텍스트를 반환합니다.
         tempList = []
@@ -201,18 +287,15 @@ class player: # player 클래스 생성
 class card: # 카드 클래스 생성
     color = -1 # 0: red, 1: green, 2: yellow, 3: blue, -1: none_color_card
     number = -1 # -1: special_card
-
     attack = -1 # 1 : +2 효과 기능, -1 : none
     changeSequence = -1 # 1 : 순서 변경 기능,-1 : none
     changeNumber = -1 # 1 : 숫자 변경 기능, -1 : none
     turnPass = -1 # 1 : 턴 넘기기 기능, -1 : none
     changeDeck = -1 # 1 : 덱 변경 기능, -1 : none
     changeColor = -1 # 1 : 컬러 변경 기능, -1 : none
-
     applyNumber = -1
     applyColor = -1
-
-
+    
     def __init__(self, color, number, attack = -1, changeSequence = -1, changeNumber = -1, turnPass = -1, changeDeck = -1, changeColor = -1): # card 클래스 생성자
 
         # 특수 카드 생성시에는 인자로 기능들을 구분해야 하나 ?
@@ -226,7 +309,6 @@ class card: # 카드 클래스 생성
         self.changeColor = changeColor
         self.applyNumber = self.number # applyNumber 는 cardNumber 로 초기값 설정
         self.applyColor = self.color # applyColor 는 cardColor 로 초기값 설정
-
 
     def __del__(self): # card class 소멸자
         pass
@@ -276,10 +358,11 @@ class card: # 카드 클래스 생성
         return result
 
     def info(self): # 카드 정보 표시
-        colorDict = {-1:'None', 0:'red', 1:'green', 2:'yellow', 3:'blue'}
+        colorDict = {NONE_COLOR:'None', RED:'red', GREEN:'green', YELLOW:'yellow', BLUE:'blue'}
         return colorDict[self.color] + ' ' + str(self.number)
 
 ## 테스트용 ##
+
 user1 = player('USER', True)
 pc1 = player('PC1', False)
 pc2 = player('PC2', False)
@@ -289,10 +372,3 @@ gamePlayerList = [user1, pc1, pc2, pc3]
 g = game(gamePlayerList)
 
 g.ready()
-#print([x.info() for x in g.openCard.cardList])
-
-loopCondA = False
-while loopCondA == False:
-    loopCondA = g.executeTurn()
-
-print(g.playerList[g.turnPlayer].playerName,"승리")
