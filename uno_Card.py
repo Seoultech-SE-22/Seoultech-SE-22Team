@@ -52,6 +52,19 @@ class card: # 카드 클래스 생성
 
         return result
 
-    def info(self): # 카드 정보 표시
+    def info(self): # 카드 정보 출력용 함수
         colorDict = {NONE_COLOR:'None', RED:'red', GREEN:'green', YELLOW:'yellow', BLUE:'blue'}
         return colorDict[self.color] + ' ' + str(self.number)
+    
+    def data(self): # Front에서 card instance의 정보를 dictionary로 확인하기 위한 메서드
+        o_Col = self.color
+        o_Num = self.number
+        e_Code = self.effectCode
+        atk_Num = self.attackNumber
+        
+        a_Col = self.applyColor
+        a_Num = self.applyNumber
+        
+        result = {'orignColor': o_Col, 'orignNumber': o_Num, 'effctCode': e_Code, 'attackNumber': atk_Num, 'applyColor': a_Col,'applyNumber': a_Num}
+        
+        return result
