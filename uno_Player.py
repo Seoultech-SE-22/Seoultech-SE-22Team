@@ -1,3 +1,5 @@
+from uno_Card import *
+
 class player: # player 클래스 생성
     playerName = '' # 플레이어 이름
     isUser = True # user인가 bot인가 확인
@@ -9,7 +11,11 @@ class player: # player 클래스 생성
         self.handCardList = []
 
     def __del__(self): # player class 소멸자
-        pass
+        if self.handCardList != []: # handCardList의 Card instance들을 모두 del 합니다.
+            n = len(self.handCardList)
+            for i in self.handCardList:
+                del card
+            handCardList = []
 
     def draw(self, game, num): # game의 DeckList에서 카드를 뽑아 패로 가져옵니다.
         
@@ -58,3 +64,12 @@ class player: # player 클래스 생성
 
     def printCurSta(self): # 현재 Player 카드 리스트
         print(self.playerName + ": ", self.allHand(), "\n")
+        
+    def data(self): # Front에서 card instance의 정보를 dictionary로 확인하기 위한 메서드
+        name = self.playerName
+        isUser = self.isUser
+        handList = self.handCardList
+        
+        result = {'playerName': name, 'isUser': isUser, 'handCardList': handList}
+        
+        return result
