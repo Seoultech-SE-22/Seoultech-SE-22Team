@@ -1,4 +1,5 @@
 from uno_Const import * # const
+from Effect import effect # Effect
 import uno_ChkCon # Check Condition
 
 class Card: # 카드 클래스 생성
@@ -25,11 +26,11 @@ class Card: # 카드 클래스 생성
         pass
 
     def cardEffect(self, game): # 특수 카드의 효과를 처리하기 위한 메서드.
-       pass
+       effect(self, game)
         
     def canUse(self, game):
         top = game.openCard.cardList[-1]
-        result = uno_ChkCon.canUse(top.number, top.color, top.applyColor, top.applyNumber, self.number, self.color)
+        result = uno_ChkCon.canUse(top, self)
 
         return result
 
