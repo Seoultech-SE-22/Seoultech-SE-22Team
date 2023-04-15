@@ -88,78 +88,6 @@ class Game: # game 클래스 생성
 
         return tempList
     
-    def executeTurn(self): # 현재는 쓰지 않음
-        
-        if self.playerList[self.turnPlayer].isUser == True: # 턴 플레이어가 유저
-                self.mainPhase()
-                #print("User",self.playerList[self.turnPlayer].playerName, "의 턴")
-        else: # 턴 플레이어가 봇
-            self.unoBot()
-        
-        result = self.endPhase()
-        return result # 게임이 끝났는지, 승자는 누구인지
-    
-    def mainPhase(self): ## 현재는 쓰지 않음
-        if self.attackCard > 0: # 공격 처리
-            self.playerList[self.turnPlayer].draw(self, self.attackCard)
-            self.attackCard = 0 # attactCard 리셋
-        
-        cond = True
-        while cond:
-            print("TopCard" +": " + self.openCard.cardList[-1].info()+"\n")
-            print(self.playerList[self.turnPlayer].playerName + ": ", self.playerList[self.turnPlayer].allHand())
-            print("카드 내기: p, 카드 뽑기: d")
-            input_act = input()
-            if input_act == 'p':
-                print("낼 카드의 인덱스를 입력하세요")
-                input_num = int(input())
-                '''
-                turn flow
-                카드 사용 여부 체크
-                True
-                    특수카드 여부 체크
-                    True
-                        0. effect 타이머 업데이트
-                        1. 해당 카드 플레이어 리스트에서 삭제
-                        2. 해당 카드 OpenZone에 넣기
-                        3. 특수 카드 효과 실행
-                        4. cond 속성 False 변경
-                    False
-                        0. 일반 타이머 업데이트
-                        1. 2. 4 실행
-                False
-                    1. 낼 수 없습니다 출력
-                    2. 카드 한장을 덱에서 뽑음
-                    3. cond 속성 False 변경
-                
-                다시 반복  
-                '''
-                if self.playerList[self.turnPlayer].handCardList[input_num].canUse(self): # 사용 가능 여부 체크
-                    if self.playerList[self.turnPlayer].handCardList[input_num].checkEffect(self): #Effect 카드 인지 판단
-                        self.effectTimer.update() # effect 타이머 업데이트
-                        useCard = self.playerList[self.turnPlayer].delCard(input_num) # 사용한 카드 삭제
-                        self.placeOpenCardZone(useCard) #OpenZome 에 카드 넣기
-                        useCard.effect.cardEffect(self) # 특수 카드 효과 실행
-                        cond = False
-                    else:
-                        self.timer.update() # 일반 타이머 업데이트
-                        if self.playerList[self.turnPlayer].handCardList[input_num].canUse(self):  # 사용 가능 여부 체크
-                            useCard = self.playerList[self.turnPlayer].delCard(input_num)  # 사용한 카드 삭제
-                            self.placeOpenCardZone(useCard)  # OpenZome 에 카드 넣기
-                            cond = False
-                else:
-                    print("그 카드는 낼 수 없습니다.")
-            if input_act == 'd':
-                print("카드를 1장 뽑습니다.")
-                self.playerList[self.turnPlayer].draw(self, 1)
-                cond = False
-            else:
-                pass
-            
-            print(self.playerList[self.turnPlayer].playerName + ": ", self.playerList[self.turnPlayer].allHand())
-        
-        print()
-    
     def actList(self): # 현재 활성화야햐하는 버튼의 딕셔너리를 반환
         result = {'drawBtn': True,'unoBtn': True, 'colorBtn': True, 'numberBtn': True}
         if (self.playerList.turnPlayer().isUser == False):
@@ -187,7 +115,7 @@ class Game: # game 클래스 생성
             self.winner = self.playerList.turnPlayer()
             
         if len(self.playerList.turnPlayer().handCardList) == 1: # 카드를 내서 1장이 되면 우노 경쟁을 위한 처리를 시작한다.
-            pass # 봇간 우노 경쟁 메서드
+            self.unoCompeteTable()
         
         self.endPhase()
     
@@ -196,11 +124,12 @@ class Game: # game 클래스 생성
         self.endPhase()
     
     def eventUnoBtn(self): # 우노 버튼 클릭시 이벤트
-        self.state == NORM
-        if self.playerList.prevPlayer().isUser == True: # 나의 우노가
-            pass # 저지당하지 않았다.
-        else: # 다른 사람의 우노를
-            self.playerList.prevPlayer().draw(self, 1) # 저지했다.
+        if self.state == UNO:
+            if self.playerList.prevPlayer().isUser == True: # 나의 우노가
+                pass # 저지당하지 않았다.
+            else: # 다른 사람의 우노를
+                self.playerList.prevPlayer().draw(self, 1) # 저지했다.
+            self.state = NORM
             
     def eventColorBtn(self, color): # 색상 변경 버튼
         self.openCard.cardList[-1].applyColor = color
@@ -210,7 +139,6 @@ class Game: # game 클래스 생성
         self.openCard.cardList[-1].applyNumber = number
         self.effectTimer.reset(EFFECT_TIME)
 
-    
     def endPhase(self): # endPhase를 실행
         self.playerList.nextTurn()
         
@@ -250,8 +178,7 @@ class Game: # game 클래스 생성
         if self.effectTimer.time <= 0:
             self.is_selectColor = False
             self.is_selectNumber = False
-            self.is_effctTime = False
-             
+            self.is_effctTime = False          
                 
     def unoBot(self): # 봇의 턴    
         strategy(self, self.GameMode)
@@ -283,13 +210,31 @@ class Game: # game 클래스 생성
         
         return result
     
-    def playerTurnTable(self): # 플레이어의 턴 순서를 표시하기 위한 정보를 반환합니다.
-        
+    def playerTurnTable(self): # 플레이어의 턴 순서를 표시하기 위한 정보를 반환합니다.    
         result = []
         for i in range(0, self.playerList.size()):
             idx = (i+self.playerList.turnIdx)%self.playerList.size()
             result.append(self.playerList.idxPlayer(idx))
         return result
+ 
+    def unoCompeteTable(self): # 우노 경쟁을 위한 테이블을 생성합니다.
+
+        plst = self.playerList.lst()
+        time = -1
+        temp = []
+        
+        if self.playerList.turnPlayer().isUser == True:
+            time = USER_TIME
+        else:
+            time = bot_TIME
+            
+        for i in plst:
+            if i.isUser == False:
+                temp.append(random.randrange(round(time/2),time))
+            else:
+                temp.append(time+1)
+        self.botCompeteList = temp.copy()
+        self.state = UNO
  
 
 ## 테스트용 ##
@@ -303,6 +248,11 @@ gamePlayerList = [user1, pc1, pc2, pc3]
 g = Game(gamePlayerList)
 
 g.ready()
+
+g.unoCompeteTable()
+g.state = UNO
+
+print(g.botCompeteList)
 
 while True:
     ip = input()
