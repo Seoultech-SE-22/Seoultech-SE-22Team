@@ -53,23 +53,23 @@ class Game: # game 클래스 생성
         
         self.deckList + deckPreset # 덱에 deckPreset을 넣는다.
         self.deckList.shuffle()
+        top = self.deckList.takeTopCard()
         
-        for i in self.playerList.lst(): # 각 플레이어들에게 카드를 나눠줍니다.
-            i.draw(self, 5) # 나눠줄 카드의 개수 : 임의로 5로 설정했음
-            print(i.playerName + ": ", i.allHand(),"\n")
+        distribution(self, self.GameMode) # 카드 분배
             
-        self.placeOpenCardZone(self.deckList.takeTopCard()) # 덱 맨 위에서 카드를 1장 오픈합니다.
+        self.placeOpenCardZone(top) # 덱 맨 위에서 카드를 1장 오픈합니다.
         print("TopCard" +": " + self.openCard.cardList[-1].info()+"\n")
         
         self.playerList.nextTurn()
 
-    def placeOpenCardZone(self, Card): #OpenCardList에 카드를 놓습니다.
+    def placeOpenCardZone(self, card): #OpenCardList에 카드를 놓습니다.
         lst = []
-        lst.append(Card)
+        lst.append(card)
         self.openCard + lst
     
         # self.openCard.cardList.append(Card)
-        Card.cardEffect(self)
+        card.reset()
+        card.cardEffect(self)
 
     def setDeck(self): # 게임에 사용할 덱의 CardList를 반환합니다.
         tempList = []
@@ -142,6 +142,7 @@ class Game: # game 클래스 생성
     def endPhase(self): # endPhase를 실행
         self.playerList.nextTurn()
         
+        endEvent(self, self.GameMode)
         if self.playerList.turnPlayer().isUser == True:
             self.timer.reset(USER_TIME)
         else:
@@ -200,7 +201,7 @@ class Game: # game 클래스 생성
         result = -1
         for i in self.playerList.lst():
             if i.isUser == True:
-                result = i
+                result = self.playerList.lst().index(i)
                 break
         
         return result
@@ -235,7 +236,8 @@ class Game: # game 클래스 생성
                 temp.append(time+1)
         self.botCompeteList = temp.copy()
         self.state = UNO
- 
+
+
 
 ## 테스트용 ##
 
