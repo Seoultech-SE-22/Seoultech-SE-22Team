@@ -6,34 +6,41 @@ from uno_Pile import * # Pile Class
 from uno_PlayerList import * # PlayerList Class
 from uno_Player import * # Player Class
 from uno_Card import * # Card Class
+from uno_Bot import * # Bot Class
 import uno_ChkCon # Check Condition
 
 class Game: # game 클래스 생성
     deckList = [] # 남은 덱
     openCard = [] # 공개된 카드
     playerList = None
-    #playerList = [] # 플레이어 목록
-    turnPlayer = -1 # 현재 턴 플레이어
-    attackCard = 0 # 공격 카드 매수
-    step = 1 # 턴 종료시, 플레이어를 넘기는 정도
     state = NORM
     botCompeteList = []
-    winner = None # 게임이 진행중이라면 빈 테이블, winner player가 존재한다면 0번 인덱스에 넣는다.
+    winner = None
+    GameMode = MODE_NORMAL # 게임의 모드
     
+    is_selectColor = False
+    is_selectNumber = False
+
+    # timer #
     is_effctTime = False
     timer = Timer(15)
     effectTimer = Timer(10)
 
-    def __init__(self, player_list): # game 클래스 생성자
+    def __init__(self, player_list, mode = MODE_NORMAL): # game 클래스 생성자
         self.playerList = PlayerList(player_list)
         self.deckList = Pile()
         self.openCard = Pile()
-        state = NORM
-        turnPlayer = -1
-        attackCard = 0
-        step = 1
-        botCompeteList = []
-        winner = None
+        self.state = NORM
+        self.botCompeteList = []
+        self.winner = None
+        self.GameMode = mode
+        
+        self.is_selectColor = False
+        self.is_selectNumber = False
+        
+        self.is_effctTime = False
+        self.timer = Timer(15)
+        self.effectTimer = Timer(10)
         
     def __del__(self): # game class 소멸자
         del self.deckList
@@ -154,12 +161,15 @@ class Game: # game 클래스 생성
         print()
     
     def actList(self): # 현재 활성화야햐하는 버튼의 딕셔너리를 반환
-        result = {'drawBtn': True,'unoBtn': True} # 'drawBtn': 드로우 버튼, 'unoBtn': 우노 버튼
+        result = {'drawBtn': True,'unoBtn': True, 'colorBtn': True, 'numberBtn': True}
         if (self.playerList.turnPlayer().isUser == False):
             result['drawBtn'] = False
             
         if (self.state == NORM):
             result['unoBtn'] = False
+        
+        result['colorBtn'] = self.is_selectColor
+        result['numberBtn'] = self.is_selectNumber
             
         return result
     
@@ -191,6 +201,15 @@ class Game: # game 클래스 생성
             pass # 저지당하지 않았다.
         else: # 다른 사람의 우노를
             self.playerList.prevPlayer().draw(self, 1) # 저지했다.
+            
+    def eventColorBtn(self, color): # 색상 변경 버튼
+        self.openCard.cardList[-1].applyColor = color
+        self.effectTimer.reset(EFFECT_TIME)
+    
+    def eventNumberBtn(self, number): # 숫자 변경 버튼
+        self.openCard.cardList[-1].applyNumber = number
+        self.effectTimer.reset(EFFECT_TIME)
+
     
     def endPhase(self): # endPhase를 실행
         self.playerList.nextTurn()
@@ -206,6 +225,7 @@ class Game: # game 클래스 생성
             self.timeEvent()
         else: # 기술 카드 효과 적용시 타이머
             self.effectTimer.update()
+            self.effectTimeEvent(self)
             
     def timeEvent(self): # 특정 시간이 되었다면, 특정 함수를 실행함.
         ## 우노 경쟁
@@ -225,22 +245,16 @@ class Game: # game 클래스 생성
                  self.eventDrawBtn()
              else: # bot의 턴
                  self.unoBot()
-    
+                 
+    def effectTimeEvent(self):
+        if self.effectTimer.time <= 0:
+            self.is_selectColor = False
+            self.is_selectNumber = False
+            self.is_effctTime = False
+             
+                
     def unoBot(self): # 봇의 턴    
-        chkList = self.playerList.turnPlayer().canUseIdx(self)
-        
-        if chkList != []: # 낼 수 있는 카드가 있다면
-            randIdx = random.choice(chkList) # 무작위의 카드를 내고
-            useCard = self.playerList.turnPlayer().delCard(randIdx)
-            self.placeOpenCardZone(useCard)
-            print( useCard.info() + "를 냅니다.")
-        else:             # 낼 수 있는 카드가 없다면
-            self.playerList.turnPlayer().draw(self, 1) # 카드를 뽑고
-            print("낼 카드가 없어서 1장 뽑습니다.")
-        
-        print(self.playerList.turnPlayer().playerName + ": ", self.playerList.turnPlayer().allHand())
-        print()
-        print()
+        strategy(self, self.GameMode)
         self.endPhase()
         
     def processUno(self, idx): # 누군가 우노를 외쳤을 때, 게임에서 실질적으로 바뀌는 부분에 대한 처리
@@ -318,6 +332,16 @@ while True:
     elif ip == 'x': #10초 감기
         for _ in range (0, 10):
             g.update()
+    
+    elif ip == 'c': # 컬러바꾸기
+        if g.actList()['colorBtn'] == True:
+            n = int(input())
+            g.eventColorBtn(n)
+            
+    elif ip == 'n': # 숫자바꾸기
+        if g.actList()['numberBtn'] == True:
+            n = int(input())
+            g.eventNumberBtn(n)
             
             
     for i in g.playerList.lst():
