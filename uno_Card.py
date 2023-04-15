@@ -31,11 +31,14 @@ class Card: # 카드 클래스 생성
     def canUse(self, game):
         top = game.openCard.cardList[-1]
         result = uno_ChkCon.canUse(top, self)
-
+        
         return result
 
+    def reset(self):
+        self.applyColor = self.color
+        self.applyNumber = self.number
+
     def info(self): # 카드 정보 출력용 함수
-        
         return self.imgName()
     
     def imgName(self): # 카드에 연결될 이미지의 스트링에 대한 데이터를 반환
