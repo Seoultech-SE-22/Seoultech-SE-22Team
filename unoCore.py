@@ -26,7 +26,7 @@ class Game: # game 클래스 생성
     timer = Timer(15)
     effectTimer = Timer(0)
 
-    def __init__(self, player_list, mode = MODE_NORMAL): # game 클래스 생성자
+    def __init__(self, player_list, mode): # game 클래스 생성자
         self.playerList = PlayerList(player_list)
         self.deckList = Pile()
         self.openCard = Pile()
@@ -41,6 +41,8 @@ class Game: # game 클래스 생성
         self.is_effctTime = False
         self.timer = Timer(15)
         self.effectTimer = Timer(0)
+        
+        self.turn = 0
         
     def __del__(self): # game class 소멸자
         del self.deckList
@@ -93,8 +95,16 @@ class Game: # game 클래스 생성
                 card.default_image = pygame.transform.smoothscale(pygame.image.load(f"images/{Card.imgColor(card)}_{Card.imgValue(card)}.png"), (screen_size[0] / 12.5, screen_size[0] / 8.333))
                 tempList.append(card)
         
-        for i in range(4): #+4 드로우 카드
+        for i in range(2): #+4 드로우 카드
             card = Card(NO_COLOR, NO_NUMBER, EFFECT_DRAW+EFFECT_COLOR , attackNumber=4)
+            tempList.append(card)
+        
+        for i in range(4): # 색깔 있는 +4 카드
+            card = Card(i, NO_NUMBER, EFFECT_DRAW, attackNumber=4)
+            tempList.append(card)
+            
+        for i in range(4): # 색깔 있는 +2 리버스 카드
+            card = Card(i, NO_NUMBER, EFFECT_DRAW+EFFECT_REVERSE, attackNumber=2)
             tempList.append(card)
 
         for _ in range(0, 2): # 색상이 불필요한 특수카드
@@ -148,21 +158,20 @@ class Game: # game 클래스 생성
     
     def eventUnoBtn(self): # 우노 버튼 클릭시 이벤트
         if self.state == UNO:
-            if self.playerList.prevPlayer().isUser == True: # 나의 우노가
-                pass # 저지당하지 않았다.
-            else: # 다른 사람의 우노를
-                self.playerList.prevPlayer().draw(self, 1) # 저지했다.
-            self.state = NORM
+            self.processUno(self.searchUserIdx())
             
     def eventColorBtn(self, color): # 색상 변경 버튼
         self.effectTimer.reset(1)
         self.openCard.cardList[-1].applyColor = color
+        self.is_selectColor = False
+        self.is_effctTime = False
     
     def eventNumberBtn(self, number): # 숫자 변경 버튼
         self.openCard.cardList[-1].applyNumber = number
         self.effectTimer.reset(EFFECT_TIME)
 
     def endPhase(self): # endPhase를 실행
+        self.turn += 1
         self.playerList.nextTurn()
         
         endEvent(self, self.GameMode)
@@ -251,13 +260,13 @@ class Game: # game 클래스 생성
         temp = []
         
         if self.playerList.turnPlayer().isUser == True:
-            time = USER_TIME
+            time = BOT_TIME
         else:
             time = BOT_TIME
             
         for i in plst:
             if i.isUser == False:
-                temp.append(random.randrange(round(time/2),time))
+                temp.append(random.randrange(round(time//2),round(time*4//5)))
             else:
                 temp.append(time+1)
         self.botCompeteList = temp.copy()

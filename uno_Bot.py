@@ -58,7 +58,7 @@ def distribution_allCard(game): # 분배 - 모든 카드
             
     for i in game.playerList.lst(): # 남은 카드 나눠줌
         i.draw(game, 1)
-        if game.deckList.size() == 0: # 뽑을 카드 없으면 종료
+        if len(game.deckList.cardList) == 0: # 뽑을 카드 없으면 종료
             break
 
     for i in game.playerList.lst(): # 플레이어가 들고 있는 카드 보여줌
@@ -68,7 +68,12 @@ def distribution_skillCard(): # 분배 - 높은 확률로 기술 카드를 더 �
     pass
 
 def event_changeColor(game): # 엔드 이벤트 - 오픈 카드의 색이 바뀜
-    game.openCard.cardList[-1].random.randrange(0,4)
+    if game.turn%5 == 0:
+        game.openCard.cardList[-1].applyColor = random.randrange(0,4)
 
-def event_shuffleOpen(game): # 엔드 이벤트 - openCard가 섞이고, 맨 위의 카드가 기술 카드라면 실행함
-    pass
+def event_shuffleOpen(game):
+    if game.turn%5 == 0:
+        game.openCard.shuffle()
+        topCard = game.openCard.takeTopCard()
+        game.placeOpenCardZone(topCard)
+        print("뒤섞")

@@ -30,7 +30,7 @@ def chk_eCode(top, chk):
     #print(1)
     temp = top.effectCode & chk.effectCode
     if temp & EFFECT_DRAW == EFFECT_DRAW:
-        if top.attackNumber < chk.attackNumber:
+        if top.attackNumber <= chk.attackNumber:
             return True
     
     if temp & EFFECT_SKIP == EFFECT_SKIP:
