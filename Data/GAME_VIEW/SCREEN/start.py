@@ -486,8 +486,7 @@ def pause(screen, screen_width, screen_height, width):
                 elif exit_button.rect.collidepoint(event.pos):
                     bgm.stop()
                     from UNO_RUN import main_screen
-                    MAIN_BGM.set_volume(0.7)
-                    MAIN_BGM.play(-1)
+                    config['system']['BGM'] = "True"
                     main_screen()
                 elif button_1920.rect.collidepoint(event.pos):
                     resolution = 1920

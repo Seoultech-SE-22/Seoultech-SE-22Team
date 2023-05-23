@@ -106,8 +106,8 @@ def loby(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, mode=
                             else:
                                 name_list.append(input_boxes[temp].text)
                         temp += 1
-                    from Data.GAME_VIEW.SCREEN.start import start_game
                     MAIN_BGM.stop()
+                    from Data.GAME_VIEW.SCREEN.start import start_game
                     start_game(int(config['system']['SCREEN_WIDTH']), int(config['system']['SCREEN_HEIGHT']),
                                AI_num,
                                name_list, color_weakness_value, mode)
@@ -126,9 +126,7 @@ def loby(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, mode=
                     set_computer(4)
                 elif AI_5.rect.collidepoint(event.pos):
                     CLICK_SOUND.play(0)
-                    set_computer(5)
-                    
-
+                set_computer(5)
             for box in input_boxes:
                 box.handle_event(event)
         for box in input_boxes:

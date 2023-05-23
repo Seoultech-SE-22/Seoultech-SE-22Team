@@ -65,6 +65,7 @@ def reset_config(config):
     config['system']['DRAW'] = 'pygame.K_d'
 
 def quit():
+    config['system']['BGM'] = "True"
     pygame.quit()
     sys.exit()
 
