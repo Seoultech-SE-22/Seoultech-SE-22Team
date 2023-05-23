@@ -99,9 +99,10 @@ def start_game(screen_width, screen_height, num, name, color_weakness_value, mod
         ##### user_Area #####
 
         description = [
-            "첫 분배시 컴퓨터 플레이어가 기술 카드를 50% 더 높은 확률로 받게 됨.컴퓨터 플레이어가 거꾸로 진행과\n 건너 뛰기 등의 기술카드를 적절히 조합하여 2~3장 이상의 카드를 한 번에 낼 수 있는 콤보를 사용.",
+            "첫 분배시 컴퓨터 플레이어가 기술 카드를 50% 더 높은 확률로 받게 됨",
             "3명의 컴퓨터 플레이어와 대전 / 첫 카드를 제외하고 모든 카드를 같은 수만큼 플레이어들에게 분배.",
-            "2명의 컴퓨터 플레이어와 대전 / 매 5턴마다 낼 수 있는 카드의 색상이 무작위로 변경됨."]
+            "2명의 컴퓨터 플레이어와 대전 / 매 5턴마다 낼 수 있는 카드의 색상이 무작위로 변경됨.",
+            "이전 단계를 완료해야 시작할 수 있습니다."]
         center1 = rectCenter(user_rect_u)
         if mode == MODE_ALLCARD:
             txt = description[1]
@@ -109,6 +110,8 @@ def start_game(screen_width, screen_height, num, name, color_weakness_value, mod
             txt = description[0]
         elif mode == MODE_CHANGECOLOR:
             txt = description[2]
+        elif mode == MODE_OPENSHUFFLE:
+            txt = description[3]
         else:
             txt = ''
         font = pygame.font.Font(FONT_PATH, set_size(36, user_rect_u[2]))
