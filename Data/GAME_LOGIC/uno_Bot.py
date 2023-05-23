@@ -48,10 +48,15 @@ def distribution_normal(game): # 분배 - 평범한 케이스
 def distribution_allCard(game): # 분배 - 모든 카드
     n = len(game.deckList.cardList) # 덱의 총 카드 수
     k = game.playerList.size() # 플레이어 수
-    
+
     for i in game.playerList.lst(): # n//k개 나눠줌
-        i.draw(game, n//k)
+        i.draw(game, 19)
             
+    for i in game.playerList.lst(): # 남은 카드 나눠줌
+        i.draw(game, 1)
+        if len(game.deckList.cardList) == 0: # 뽑을 카드 없으면 종료
+            break
+
     for i in game.playerList.lst(): # 남은 카드 나눠줌
         i.draw(game, 1)
         if len(game.deckList.cardList) == 0: # 뽑을 카드 없으면 종료
