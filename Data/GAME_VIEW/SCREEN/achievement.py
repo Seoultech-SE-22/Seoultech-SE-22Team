@@ -14,19 +14,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                              pos=(set_size(100, SCREEN_WIDTH), set_size(30, SCREEN_WIDTH)),
                              size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     single_win_title = Text(text_input="SINGLE WIN",
-                            font="notosanscjkkr",
+                            font=FONT_PATH,
                             color=(0, 0, 0),
                             pos=(set_size(350, SCREEN_WIDTH), set_size(50, SCREEN_WIDTH)),
                             size=set_size(30, SCREEN_WIDTH),
                             screen=SCREEN)
     single_win_explain = Text(text_input="Winning a single-player game",
-                              font="notosanscjkkr",
+                              font=FONT_PATH,
                               color=(0, 0, 0),
                               pos=(set_size(350, SCREEN_WIDTH), set_size(75, SCREEN_WIDTH)),
                               size=set_size(20, SCREEN_WIDTH),
                               screen=SCREEN)
     single_win_date = Text(text_input="",
-                           font="notosanscjkkr",
+                           font=FONT_PATH,
                            color=(0, 0, 0),
                            pos=(set_size(350, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)),
                            size=set_size(20, SCREEN_WIDTH),
@@ -38,19 +38,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                                pos=(set_size(700, SCREEN_WIDTH), set_size(30, SCREEN_WIDTH)),
                                size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     ten_turn_win_title = Text(text_input="10 WIN",
-                              font="notosanscjkkr",
+                              font=FONT_PATH,
                               color=(0, 0, 0),
                               pos=(set_size(950, SCREEN_WIDTH), set_size(50, SCREEN_WIDTH)),
                               size=set_size(30, SCREEN_WIDTH),
                               screen=SCREEN)
     ten_turn_win_explain = Text(text_input="Win in 10 turns in a single player game",
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(950, SCREEN_WIDTH), set_size(75, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
                                 screen=SCREEN)
     ten_turn_win_date = Text(text_input="",
-                             font="notosanscjkkr",
+                             font=FONT_PATH,
                              color=(0, 0, 0),
                              pos=(set_size(950, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)),
                              size=set_size(20, SCREEN_WIDTH),
@@ -62,19 +62,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                               pos=(set_size(100, SCREEN_WIDTH), set_size(130, SCREEN_WIDTH)),
                               size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     story_a_win_title = Text(text_input="A WIN",
-                             font="notosanscjkkr",
+                             font=FONT_PATH,
                              color=(0, 0, 0),
                              pos=(set_size(350, SCREEN_WIDTH), set_size(150, SCREEN_WIDTH)),
                              size=set_size(30, SCREEN_WIDTH),
                              screen=SCREEN)
     story_a_win_explain = Text(text_input="Win in Area A in Story Mode",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(350, SCREEN_WIDTH), set_size(175, SCREEN_WIDTH)),
                                size=set_size(20, SCREEN_WIDTH),
                                screen=SCREEN)
     story_a_win_date = Text(text_input="",
-                            font="notosanscjkkr",
+                            font=FONT_PATH,
                             color=(0, 0, 0),
                             pos=(set_size(350, SCREEN_WIDTH), set_size(200, SCREEN_WIDTH)),
                             size=set_size(20, SCREEN_WIDTH),
@@ -86,19 +86,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                               pos=(set_size(700, SCREEN_WIDTH), set_size(130, SCREEN_WIDTH)),
                               size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     story_b_win_title = Text(text_input="B WIN",
-                             font="notosanscjkkr",
+                             font=FONT_PATH,
                              color=(0, 0, 0),
                              pos=(set_size(950, SCREEN_WIDTH), set_size(150, SCREEN_WIDTH)),
                              size=set_size(30, SCREEN_WIDTH),
                              screen=SCREEN)
     story_b_win_explain = Text(text_input="Win in Area B in Story Mode",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(950, SCREEN_WIDTH), set_size(175, SCREEN_WIDTH)),
                                size=set_size(20, SCREEN_WIDTH),
                                screen=SCREEN)
     story_b_win_date = Text(text_input="",
-                            font="notosanscjkkr",
+                            font=FONT_PATH,
                             color=(0, 0, 0),
                             pos=(set_size(950, SCREEN_WIDTH), set_size(200, SCREEN_WIDTH)),
                             size=set_size(20, SCREEN_WIDTH),
@@ -110,19 +110,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                               pos=(set_size(100, SCREEN_WIDTH), set_size(230, SCREEN_WIDTH)),
                               size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     story_c_win_title = Text(text_input="C WIN",
-                             font="notosanscjkkr",
+                             font=FONT_PATH,
                              color=(0, 0, 0),
                              pos=(set_size(350, SCREEN_WIDTH), set_size(250, SCREEN_WIDTH)),
                              size=set_size(30, SCREEN_WIDTH),
                              screen=SCREEN)
     story_c_win_explain = Text(text_input="Win in Area C in Story Mode",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(350, SCREEN_WIDTH), set_size(275, SCREEN_WIDTH)),
                                size=set_size(20, SCREEN_WIDTH),
                                screen=SCREEN)
     story_c_win_date = Text(text_input="",
-                            font="notosanscjkkr",
+                            font=FONT_PATH,
                             color=(0, 0, 0),
                             pos=(set_size(350, SCREEN_WIDTH), set_size(300, SCREEN_WIDTH)),
                             size=set_size(20, SCREEN_WIDTH),
@@ -134,19 +134,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                               pos=(set_size(700, SCREEN_WIDTH), set_size(230, SCREEN_WIDTH)),
                               size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     story_d_win_title = Text(text_input="D WIN",
-                             font="notosanscjkkr",
+                             font=FONT_PATH,
                              color=(0, 0, 0),
                              pos=(set_size(950, SCREEN_WIDTH), set_size(250, SCREEN_WIDTH)),
                              size=set_size(30, SCREEN_WIDTH),
                              screen=SCREEN)
     story_d_win_explain = Text(text_input="Win in Area D in Story Mode",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(950, SCREEN_WIDTH), set_size(275, SCREEN_WIDTH)),
                                size=set_size(20, SCREEN_WIDTH),
                                screen=SCREEN)
     story_d_win_date = Text(text_input="",
-                            font="notosanscjkkr",
+                            font=FONT_PATH,
                             color=(0, 0, 0),
                             pos=(set_size(950, SCREEN_WIDTH), set_size(300, SCREEN_WIDTH)),
                             size=set_size(20, SCREEN_WIDTH),
@@ -158,19 +158,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                                 pos=(set_size(100, SCREEN_WIDTH), set_size(330, SCREEN_WIDTH)),
                                 size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     story_all_win_title = Text(text_input="ALL WIN",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(350, SCREEN_WIDTH), set_size(350, SCREEN_WIDTH)),
                                size=set_size(30, SCREEN_WIDTH),
                                screen=SCREEN)
     story_all_win_explain = Text(text_input="Win all Area in Story Mode",
-                                 font="notosanscjkkr",
+                                 font=FONT_PATH,
                                  color=(0, 0, 0),
                                  pos=(set_size(350, SCREEN_WIDTH), set_size(375, SCREEN_WIDTH)),
                                  size=set_size(20, SCREEN_WIDTH),
                                  screen=SCREEN)
     story_all_win_date = Text(text_input="",
-                              font="notosanscjkkr",
+                              font=FONT_PATH,
                               color=(0, 0, 0),
                               pos=(set_size(350, SCREEN_WIDTH), set_size(400, SCREEN_WIDTH)),
                               size=set_size(20, SCREEN_WIDTH),
@@ -182,19 +182,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                                 pos=(set_size(700, SCREEN_WIDTH), set_size(330, SCREEN_WIDTH)),
                                 size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     after_uno_win_title = Text(text_input="SECOND UNO",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(950, SCREEN_WIDTH), set_size(350, SCREEN_WIDTH)),
                                size=set_size(30, SCREEN_WIDTH),
                                screen=SCREEN)
     after_uno_win_explain = Text(text_input="Win after another player declares UNO",
-                                 font="notosanscjkkr",
+                                 font=FONT_PATH,
                                  color=(0, 0, 0),
                                  pos=(set_size(950, SCREEN_WIDTH), set_size(375, SCREEN_WIDTH)),
                                  size=set_size(20, SCREEN_WIDTH),
                                  screen=SCREEN)
     after_uno_win_date = Text(text_input="",
-                              font="notosanscjkkr",
+                              font=FONT_PATH,
                               color=(0, 0, 0),
                               pos=(set_size(950, SCREEN_WIDTH), set_size(400, SCREEN_WIDTH)),
                               size=set_size(20, SCREEN_WIDTH),
@@ -206,19 +206,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                                 pos=(set_size(100, SCREEN_WIDTH), set_size(430, SCREEN_WIDTH)),
                                 size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     no_effect_win_title = Text(text_input="ONLY NUMBER",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(350, SCREEN_WIDTH), set_size(450, SCREEN_WIDTH)),
                                size=set_size(30, SCREEN_WIDTH),
                                screen=SCREEN)
     no_effect_win_explain = Text(text_input="Win without a single technical card",
-                                 font="notosanscjkkr",
+                                 font=FONT_PATH,
                                  color=(0, 0, 0),
                                  pos=(set_size(350, SCREEN_WIDTH), set_size(475, SCREEN_WIDTH)),
                                  size=set_size(20, SCREEN_WIDTH),
                                  screen=SCREEN)
     no_effect_win_date = Text(text_input="",
-                              font="notosanscjkkr",
+                              font=FONT_PATH,
                               color=(0, 0, 0),
                               pos=(set_size(350, SCREEN_WIDTH), set_size(500, SCREEN_WIDTH)),
                               size=set_size(20, SCREEN_WIDTH),
@@ -230,19 +230,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                               pos=(set_size(700, SCREEN_WIDTH), set_size(430, SCREEN_WIDTH)),
                               size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     no_draw_win_title = Text(text_input="DO NOT DRAW",
-                             font="notosanscjkkr",
+                             font=FONT_PATH,
                              color=(0, 0, 0),
                              pos=(set_size(950, SCREEN_WIDTH), set_size(450, SCREEN_WIDTH)),
                              size=set_size(30, SCREEN_WIDTH),
                              screen=SCREEN)
     no_draw_win_explain = Text(text_input="Win without drawing a card",
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(950, SCREEN_WIDTH), set_size(475, SCREEN_WIDTH)),
                                size=set_size(20, SCREEN_WIDTH),
                                screen=SCREEN)
     no_draw_win_date = Text(text_input="",
-                            font="notosanscjkkr",
+                            font=FONT_PATH,
                             color=(0, 0, 0),
                             pos=(set_size(950, SCREEN_WIDTH), set_size(500, SCREEN_WIDTH)),
                             size=set_size(20, SCREEN_WIDTH),
@@ -254,19 +254,19 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
                                   pos=(set_size(100, SCREEN_WIDTH), set_size(530, SCREEN_WIDTH)),
                                   size=(set_size(100, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)))
     twenty_turn_win_title = Text(text_input="20 WIN",
-                                 font="notosanscjkkr",
+                                 font=FONT_PATH,
                                  color=(0, 0, 0),
                                  pos=(set_size(350, SCREEN_WIDTH), set_size(550, SCREEN_WIDTH)),
                                  size=set_size(30, SCREEN_WIDTH),
                                  screen=SCREEN)
     twenty_turn_win_explain = Text(text_input="Win in 20 turns in a single player game",
-                                   font="notosanscjkkr",
+                                   font=FONT_PATH,
                                    color=(0, 0, 0),
                                    pos=(set_size(350, SCREEN_WIDTH), set_size(575, SCREEN_WIDTH)),
                                    size=set_size(20, SCREEN_WIDTH),
                                    screen=SCREEN)
     twenty_turn_win_date = Text(text_input="",
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(350, SCREEN_WIDTH), set_size(600, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
@@ -278,7 +278,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['SINGLE_WIN'] == "True":
         single_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         single_win_date = Text(text_input=config['system']['SINGLE_WIN_DATE'],
-                               font="notosanscjkkr",
+                               font=FONT_PATH,
                                color=(0, 0, 0),
                                pos=(set_size(350, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)),
                                size=set_size(20, SCREEN_WIDTH),
@@ -286,7 +286,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['TEN_TURN_WIN'] == "True":
         ten_turn_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         ten_turn_win_date = Text(text_input=config['system']['TEN_TURN_WIN_DATE'],
-                                 font="notosanscjkkr",
+                                 font=FONT_PATH,
                                  color=(0, 0, 0),
                                  pos=(set_size(950, SCREEN_WIDTH), set_size(100, SCREEN_WIDTH)),
                                  size=set_size(20, SCREEN_WIDTH),
@@ -294,7 +294,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['STORY_A_WIN'] == "True":
         story_a_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         story_a_win_date = Text(text_input=config['system']['STORY_A_WIN_DATE'],
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(350, SCREEN_WIDTH), set_size(200, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
@@ -302,7 +302,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['STORY_B_WIN'] == "True":
         story_b_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         story_b_win_date = Text(text_input=config['system']['STORY_B_WIN_DATE'],
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(950, SCREEN_WIDTH), set_size(200, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
@@ -310,7 +310,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['STORY_C_WIN'] == "True":
         story_c_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         story_c_win_date = Text(text_input=config['system']['STORY_C_WIN_DATE'],
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(350, SCREEN_WIDTH), set_size(300, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
@@ -318,7 +318,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['STORY_D_WIN'] == "True":
         story_d_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         story_d_win_date = Text(text_input=config['system']['STORY_D_WIN_DATE'],
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(950, SCREEN_WIDTH), set_size(300, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
@@ -326,7 +326,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['STORY_ALL_WIN'] == "True":
         story_all_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         story_all_win_date = Text(text_input=config['system']['STORY_ALL_WIN_DATE'],
-                                  font="notosanscjkkr",
+                                  font=FONT_PATH,
                                   color=(0, 0, 0),
                                   pos=(set_size(350, SCREEN_WIDTH), set_size(400, SCREEN_WIDTH)),
                                   size=set_size(20, SCREEN_WIDTH),
@@ -334,7 +334,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['AFTER_UNO_WIN'] == "True":
         after_uno_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         after_uno_win_date = Text(text_input=config['system']['AFTER_UNO_WIN_DATE'],
-                                  font="notosanscjkkr",
+                                  font=FONT_PATH,
                                   color=(0, 0, 0),
                                   pos=(set_size(950, SCREEN_WIDTH), set_size(400, SCREEN_WIDTH)),
                                   size=set_size(20, SCREEN_WIDTH),
@@ -342,7 +342,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['NO_EFFECT_WIN'] == "True":
         no_effect_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         no_effect_win_date = Text(text_input=config['system']['NO_EFFECT_WIN_DATE'],
-                                  font="notosanscjkkr",
+                                  font=FONT_PATH,
                                   color=(0, 0, 0),
                                   pos=(set_size(350, SCREEN_WIDTH), set_size(500, SCREEN_WIDTH)),
                                   size=set_size(20, SCREEN_WIDTH),
@@ -350,7 +350,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['NO_DRAW_WIN'] == "True":
         no_draw_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         no_draw_win_date = Text(text_input=config['system']['NO_DRAW_WIN_DATE'],
-                                font="notosanscjkkr",
+                                font=FONT_PATH,
                                 color=(0, 0, 0),
                                 pos=(set_size(950, SCREEN_WIDTH), set_size(500, SCREEN_WIDTH)),
                                 size=set_size(20, SCREEN_WIDTH),
@@ -358,7 +358,7 @@ def achievement_screen(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, OPTION):
     if config['system']['TWENTY_TURN_WIN'] == "True":
         twenty_turn_win_achieve.image = pygame.image.load(BUTTON_PATH + "achievement_checked.png")
         twenty_turn_win_date = Text(text_input=config['system']['TWENTY_TURN_WIN_DATE'],
-                                    font="notosanscjkkr",
+                                    font=FONT_PATH,
                                     color=(0, 0, 0),
                                     pos=(set_size(350, SCREEN_WIDTH), set_size(600, SCREEN_WIDTH)),
                                     size=set_size(20, SCREEN_WIDTH),

@@ -99,9 +99,10 @@ def start_game(screen_width, screen_height, num, name, color_weakness_value, mod
         ##### user_Area #####
 
         description = [
-            "첫 분배시 컴퓨터 플레이어가 기술 카드를 50% 더 높은 확률로 받게 됨.컴퓨터 플레이어가 거꾸로 진행과\n 건너 뛰기 등의 기술카드를 적절히 조합하여 2~3장 이상의 카드를 한 번에 낼 수 있는 콤보를 사용.",
+            "첫 분배시 컴퓨터 플레이어가 기술 카드를 50% 더 높은 확률로 받게 됨",
             "3명의 컴퓨터 플레이어와 대전 / 첫 카드를 제외하고 모든 카드를 같은 수만큼 플레이어들에게 분배.",
-            "2명의 컴퓨터 플레이어와 대전 / 매 5턴마다 낼 수 있는 카드의 색상이 무작위로 변경됨."]
+            "2명의 컴퓨터 플레이어와 대전 / 매 5턴마다 낼 수 있는 카드의 색상이 무작위로 변경됨.",
+            "이전 단계를 완료해야 시작할 수 있습니다."]
         center1 = rectCenter(user_rect_u)
         if mode == MODE_ALLCARD:
             txt = description[1]
@@ -109,6 +110,8 @@ def start_game(screen_width, screen_height, num, name, color_weakness_value, mod
             txt = description[0]
         elif mode == MODE_CHANGECOLOR:
             txt = description[2]
+        elif mode == MODE_OPENSHUFFLE:
+            txt = description[3]
         else:
             txt = ''
         font = pygame.font.Font(FONT_PATH, set_size(36, user_rect_u[2]))
@@ -591,6 +594,36 @@ def winner_screen(screen, screen_width, screen_height, winner, mode):
     screen = pygame.display.set_mode(screen_size)
     screen.fill("black")
 
+    def show_popup(text_input, image_file):
+        IMAGE_SIZE = (50, 50)
+        POPUP_SIZE = (300, 80)
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 36)
+
+        text = font.render(text_input, True, (0,0,0))
+
+        popup_rect = pygame.Rect(0, 0, POPUP_SIZE[0], POPUP_SIZE[1])
+        popup_rect.center = (screen_width // 2, screen_height // 2)
+
+        image = pygame.image.load(image_file)
+        image = pygame.transform.scale(image, IMAGE_SIZE)  # 이미지 크기 조정
+
+        image_rect = image.get_rect()
+        image_rect.left = popup_rect.left + 10  # 이미지를 팝업 창 왼쪽에 위치시킴
+        image_rect.centery = popup_rect.centery
+
+        text_rect = text.get_rect()
+        text_rect.right = popup_rect.right - 10  # 텍스트를 팝업 창 오른쪽에 위치시킴
+        text_rect.centery = popup_rect.centery
+
+        # 팝업 창 그리기
+        pygame.draw.rect(screen, (255, 255, 255), popup_rect)
+        pygame.draw.rect(screen, (0, 0, 0), popup_rect, 2)
+
+        screen.blit(image, image_rect)  # 이미지 그리기
+        screen.blit(text, text_rect)
+
+        pygame.display.flip()
     init_bg(screen, SCREEN_PATH + "options_screen.png", screen_width, screen_height)
 
     button_width = 220
@@ -604,54 +637,65 @@ def winner_screen(screen, screen_width, screen_height, winner, mode):
             config['system']['STORY_A_WIN'] = "True"
             config['system']['STORY_A_WIN_DATE'] = str(now.date())
             save_config(config)
+            show_popup("STORY A WIN", BUTTON_PATH + "story_a_win.png")
     elif mode == MODE_ALLCARD:
         if config['system']['STORY_B_WIN'] == "False":
             config['system']['STORY_B_WIN'] = "True"
             config['system']['STORY_B_WIN_DATE'] = str(now.date())
+            show_popup("STORY B WIN", BUTTON_PATH + "story_b_win.png")
             save_config(config)
     elif mode == MODE_CHANGECOLOR:
         if config['system']['STORY_C_WIN'] == "False":
             config['system']['STORY_C_WIN'] = "True"
             config['system']['STORY_C_WIN_DATE'] = str(now.date())
+            show_popup("STORY C WIN", BUTTON_PATH + "story_c_win.png")
             save_config(config)
     elif mode == MODE_OPENSHUFFLE:
         if config['system']['STORY_D_WIN'] == "False":
             config['system']['STORY_D_WIN'] = "True"
             config['system']['STORY_D_WIN_DATE'] = str(now.date())
+            show_popup("STORY D WIN", BUTTON_PATH + "story_d_win.png")
             save_config(config)
         if config['system']['STORY_ALL_WIN'] == "False":
             config['system']['STORY_ALL_WIN'] = "True"
             config['system']['STORY_ALL_WIN_DATE'] = str(now.date())
+            show_popup("STORY ALL WIN", BUTTON_PATH + "story_all_win.png")
             save_config(config)
     else:
         if config['system']['SINGLE_WIN'] == "False":
             config['system']['SINGLE_WIN'] = "True"
             config['system']['SINGLE_WIN_DATE'] = str(now.date())
+            show_popup("SINGLE WIN", BUTTON_PATH + "single_win.png")
             save_config(config)
         if turn_num <= 10:
             if config['system']['TEN_TURN_WIN'] == "False":
                 config['system']['TEN_TURN_WIN'] = "True"
                 config['system']['TEN_TURN_WIN_DATE'] = str(now.date())
+                show_popup("TEN TURN WIN", BUTTON_PATH + "ten_turn_win.png")
                 save_config(config)
         if turn_num <= 20:
             if config['system']['TWENTY_TURN_WIN'] == "False":
                 config['system']['TWENTY_TURN_WIN'] = "True"
                 config['system']['TWENTY_TURN_WIN_DATE'] = str(now.date())
+                show_popup("TWENTY TURN WIN", BUTTON_PATH + "twenty_turn_win.png")
                 save_config(config)
         if not is_other_Uno:
             if config['system']['AFTER_UNO_WIN'] == "False":
                 config['system']['AFTER_UNO_WIN'] = "True"
                 config['system']['AFTER_UNO_WIN_DATE'] = str(now.date())
+                show_popup("AFTER UNO WIN", BUTTON_PATH + "after_uno_win.png")
                 save_config(config)
         if not is_use_effect:
             if config['system']['NO_EFFECT_WIN'] == "False":
                 config['system']['NO_EFFECT_WIN'] = "True"
                 config['system']['NO_EFFECT_WIN_DATE'] = str(now.date())
+                show_popup("NO EFFECT WIN", BUTTON_PATH + "no_effect_win.png")
                 save_config(config)
         if not is_draw:
             if config['system']['NO_DRAW_WIN'] == "False":
                 config['system']['NO_DRAW_WIN'] = "True"
                 config['system']['NO_DRAW_WIN_DATE'] = str(now.date())
+                show_popup("NO DRAW WIN", BUTTON_PATH + "no_draw_win.png")
                 save_config(config)
 
     play_button = Button(image=pygame.image.load(BUTTON_PATH + "play_button.png"),
@@ -1085,9 +1129,9 @@ def createColorBtn(rect, start_color_weakness_value):
     for i in range(0, 4):
         pos_o = (rect[0] + i * x, rect[1] + y + 50)
         size_o = (x, y)
-        if start_color_weakness_value == False:
+        if not start_color_weakness_value:
             img_o = CARD_PATH + COLOR_TABLE[i] + ".png"
-        elif start_color_weakness_value == True:
+        elif start_color_weakness_value:
             img_o = BLIND_CARD_PATH + COLOR_TABLE[i] + ".png"
         btn = Button(image=pygame.image.load(img_o), pos=pos_o, size=size_o)
         lst.append(btn)
@@ -1113,4 +1157,4 @@ def rectCenter(rect):
 
     y1 = rect[1]
     y2 = rect[1] + rect[3]
-    return ((x1 + x2) / 2, (y1 + y2) / 2)
+    return (x1 + x2) / 2, (y1 + y2) / 2
