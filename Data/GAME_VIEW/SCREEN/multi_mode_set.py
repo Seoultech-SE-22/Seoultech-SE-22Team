@@ -1,16 +1,24 @@
 import pygame.image
+
 from Data.GAME_LOGIC.uno_Const import MODE_NORMAL
 from Data.GAME_VIEW.OBJECT.button import Button
 from Data.GAME_VIEW.OBJECT.text import Text
 from Data.GAME_VIEW.OBJECT.textbox import TextBox
 from Data.GAME_VIEW.OBJECT.view import init_view
+from Data.GAME_VIEW.SCREEN.multi_start import multi_start_game
 from Data.GAME_VIEW.util import *
+from _thread import *
+import threading
+
+from _thread import *
+import pickle
+
 from queue import Queue
 
-
+server_pw = ""
 def multi_mode_set(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT, mode=MODE_NORMAL):
     init_bg(SCREEN, SCREEN_PATH + "options_screen.png", SCREEN_WIDTH, SCREEN_HEIGHT)
-
+    global server_pw
     back_button = Button(image=pygame.image.load(BUTTON_PATH + "back_button.png"),
                          pos=(set_size(30, SCREEN_WIDTH), set_size(30, SCREEN_WIDTH)),
                          size=(set_size(50, SCREEN_WIDTH), set_size(50, SCREEN_WIDTH)))
@@ -130,8 +138,8 @@ def multi_mode_set(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEI
                     # 클라이언트 ip 주소 입력창
                     # client(input_boxes[2].text)
                     from Data.SOCKET.server_socket_m import start_new_thread
-                    start_new_thread(client, (input_boxes[2].text,))
-                    pw = input_boxes[3].text
+                    start_new_thread(client, (input_boxes[1].text,))
+                    pw = input_boxes[0].text
                     server_pw = input_boxes[0].text
                     is_server = False
 

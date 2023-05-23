@@ -44,6 +44,7 @@ def story_mode(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
     start_button = Button(image=pygame.image.load(BUTTON_PATH + "start_button.png"),
                           pos=(x_pos, y_pos + set_size(260, SCREEN_WIDTH)),
                           size=(BUTTON_WIDTH, BUTTON_HEIGHT))
+
     if config['system']['STORY_A_WIN'] == "False" and config['system']['STORY_B_WIN'] == "False" and config['system']['STORY_C_WIN'] == "False" and config['system']['STORY_D_WIN'] == "False":
         story_mode_2.image = pygame.image.load(BUTTON_PATH + "story_mode_4_completed.png")
         story_mode_3.image = pygame.image.load(BUTTON_PATH + "story_mode_4_completed.png")
@@ -53,8 +54,9 @@ def story_mode(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
         story_mode_4.image = pygame.image.load(BUTTON_PATH + "story_mode_4_completed.png")
     elif config['system']['STORY_C_WIN'] == "False" and config['system']['STORY_D_WIN'] == "False":
         story_mode_4.image = pygame.image.load(BUTTON_PATH + "story_mode_4_completed.png")
-    init_view(SCREEN, [back_button, story_mode_1, story_mode_2, story_mode_3, story_mode_4, start_button])
 
+    init_view(SCREEN, [back_button, story_mode_1, story_mode_2, story_mode_3, story_mode_4, start_button])
+    
     def show_popup(stage):
         global text, mode, text_rect
         font = pygame.font.Font(FONT_PATH, set_size(36, SCREEN_WIDTH))
@@ -63,8 +65,7 @@ def story_mode(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
             "3명의 컴퓨터 플레이어와 대전 / 첫 카드를 제외하고 모든 카드를 같은 수만큼 플레이어들에게 분배.",
             "2명의 컴퓨터 플레이어와 대전 / 매 5턴마다 낼 수 있는 카드의 색상이 무작위로 변경됨.",
             "5턴마다 무작위로 opencard가 셔플된다. 그 후 맨 위 카드의 효과가 적용됨.",
-            "이전 단계를 완료해야 시작할 수 있습니다."
-        ]
+            "이전 단계를 완료해야 시작할 수 있습니다."]
 
         if stage == "A":
             text = font.render(description[0], True, (0, 0, 0))
@@ -87,14 +88,18 @@ def story_mode(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
                           text_rect.top - set_size(10, SCREEN_WIDTH),
                           text_rect.width + set_size(20, SCREEN_WIDTH),
                           text_rect.height + set_size(20, SCREEN_WIDTH)))
+
         pygame.draw.rect(SCREEN, (0, 0, 0),
                          (text_rect.left - set_size(10, SCREEN_WIDTH),
                           text_rect.top - set_size(10, SCREEN_WIDTH),
                           text_rect.width + set_size(20, SCREEN_WIDTH),
                           text_rect.height + set_size(20, SCREEN_WIDTH)), 2)
+
         SCREEN.blit(text, text_rect)
         pygame.display.flip()
+    
     popup = False
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -151,3 +156,4 @@ def story_mode(SCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
                         else:
                             show_popup("none")
         pygame.display.flip()
+        
