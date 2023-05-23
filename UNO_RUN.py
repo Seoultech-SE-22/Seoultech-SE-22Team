@@ -130,6 +130,8 @@ def main_screen():
         pygame.display.update()
 
 
-MAIN_BGM.set_volume(0.7)
-MAIN_BGM.play(-1)
+if config['system']['BGM'] == "True":
+    config['system']['BGM'] = "False"
+    MAIN_BGM.set_volume(0.7)
+    MAIN_BGM.play(-1)
 main_screen()
